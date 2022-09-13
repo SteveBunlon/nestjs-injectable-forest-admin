@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { createAgent, Agent } from '@forestadmin/agent';
 import { createSqlDataSource } from '@forestadmin/datasource-sql';
-import { UserService } from './user.service';
+import { UserService } from '../users/user.service';
 
 @Injectable()
 export class ForestService {
   private instance: Agent<any>;
 
-  constructor(private readonly userService: UserService) {}
+  constructor(@Inject(UserService) private readonly userService: UserService) {}
 
   getAgent(): Agent<any> {
     if (!this.instance) {
@@ -31,6 +31,25 @@ export class ForestService {
                 'calling user service get user phone number for list',
               );
               return this.userService.getUserPhoneNumberForList(records);
+            },
+          });
+
+          users.addAction('Change firstname', {
+            scope: 'Single',
+            form: [{
+              type: 'String',
+              label: 'firstname',
+              isRequired: true,
+            }],
+            execute: async (context, resultBuilder) => {
+              const recordId = Number(await context.getRecordId());
+              const result = await this.userService.updateFirstName(recordId, context.formValues.firstname);
+
+              if (result) {
+                return resultBuilder.success('Article\'s title updated successfully');
+              }
+
+              return resultBuilder.error('We could not update the article\s title, please reach an administrator out');
             },
           });
         });

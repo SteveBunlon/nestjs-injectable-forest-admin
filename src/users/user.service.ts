@@ -29,4 +29,12 @@ export class UserService {
   validatePhoneNumber(_: string) {
     return true;
   }
+
+  async updateFirstName(id: number, firstname: string): Promise<Object> {
+    const user = await this.usersRepository.findOneBy({ id });
+    user.firstname = firstname.toUpperCase();
+    return this.usersRepository.save({
+      ...user,
+    });
+  }
 }

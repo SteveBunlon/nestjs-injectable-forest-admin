@@ -1,6 +1,21 @@
 [
   {
-    "actions": [],
+    "actions": [
+      {
+        "id": "users-0-change-firstname",
+        "name": "Change firstname",
+        "type": "single",
+        "baseUrl": null,
+        "endpoint": "/forest/_actions/users/0/change-firstname",
+        "httpMethod": "POST",
+        "redirect": null,
+        "download": false,
+        "fields": [
+          {"isRequired": true, "field": "firstname", "type": "String"}
+        ],
+        "hooks": {"load": false, "change": ["changeHook"]}
+      }
+    ],
     "fields": [
       {
         "defaultValue": null,

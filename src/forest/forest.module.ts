@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ForestService } from './forest.service';
-import { UserModule } from './user.module';
+import { UserModule } from '../users/user.module';
 
 @Module({
   imports: [UserModule],

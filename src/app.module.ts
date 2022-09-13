@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ForestModule } from './forest.module';
+import { ForestModule } from './forest/forest.module';
 import { ConfigModule } from '@nestjs/config';
-import { User } from './user.entity';
-import { UserModule } from './user.module';
-import { UserService } from './user.service';
+import { User } from './users/user.entity';
+import { UserModule } from './users/user.module';
+import { UserService } from './users/user.service';
 
 @Module({
   imports: [
@@ -17,9 +17,10 @@ import { UserService } from './user.service';
       port: 5435,
       username: 'forest',
       password: 'secret',
-      database: 'example_app',
+      database: 'blog',
       entities: [User],
       synchronize: true,
+      logging: ['query'],
     }),
     ForestModule,
     UserModule,
